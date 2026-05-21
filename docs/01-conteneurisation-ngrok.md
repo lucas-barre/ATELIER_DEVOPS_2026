@@ -2,7 +2,7 @@
 
 **Niveau** : Débutant
 **Durée estimée** : 2 à 3 heures
-**Pré-requis** : avoir forké le dépôt, avoir lancé un **Codespace** sur votre fork (voir README), avoir un *authtoken* Ngrok personnel.
+**Pré-requis** : avoir forké le dépôt, avoir lancé un **Codespace** sur votre fork (voir README), avoir un *authtoken* Ngrok personnel (https://ngrok.com).
 
 ---
 
@@ -21,7 +21,6 @@ C'est exactement ce que permet la combinaison **Docker + GitHub Actions + Ngrok*
 À la fin de l'exercice, vous saurez :
 
 - Écrire un `Dockerfile` pour une application Python
-- Construire et lancer une image **dans votre Codespace** (avant de passer à la CI)
 - Écrire un workflow GitHub Actions qui construit puis exécute un conteneur
 - Exposer un port de conteneur sur Internet via Ngrok
 - Gérer un secret (le token Ngrok) sans le commiter
@@ -30,10 +29,10 @@ C'est exactement ce que permet la combinaison **Docker + GitHub Actions + Ngrok*
 
 ## Cahier des charges
 
-1. L'application Flask fournie doit **tourner dans un conteneur Docker** construit à partir d'un `Dockerfile` que vous écrivez.
+1. L'application Flask fournie dans ce Repository (__init__.py) doit **tourner dans un conteneur Docker** construit à partir d'un `Dockerfile` que vous écrivez.
 2. Le **port HTTP** du conteneur doit être joignable depuis l'extérieur du conteneur.
 3. Un **workflow GitHub Actions** (`.github/workflows/`) :
-   - se déclenche sur `push` (et idéalement aussi `workflow_dispatch` pour pouvoir le relancer à la main),
+   - se déclenche sur `push`,
    - construit l'image Docker,
    - lance le conteneur,
    - ouvre un tunnel **Ngrok** vers le port exposé,
