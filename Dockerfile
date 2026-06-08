@@ -1,11 +1,15 @@
-FROM python:3.12-slim
+FROM python:3.7-slim
+
+RUN useradd -m -u 1000 appuser
 
 WORKDIR /app
 
 COPY requirements-dev.txt .
 RUN pip install --no-cache-dir -r requirements-dev.txt
 
-COPY . .
+COPY --chown=appuser:appuser . .
+
+USER appuser
 
 EXPOSE 5000
 
