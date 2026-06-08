@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accueil — Lucas Barré</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+</head>
+<body>
+  <div class="card">
+    <p class="label">Accueil</p>
+
+    <h1>Bonjour<br><em>tout le monde !</em></h1>
+    <p class="subtitle">Application Flask — Exercice 1 / Conteneurisation</p>
+
+    <hr class="divider">
+
+    <p class="message">
+      Bienvenue sur cette application web déployée dans un
+      <strong>conteneur Docker</strong>, exposée publiquement via
+      <strong>Ngrok</strong> et orchestrée automatiquement par
+      <strong>GitHub Actions</strong>.
+    </p>
+
+    <hr class="divider">
+
+    <p class="message">
+      <a href="/exercices/" style="color: var(--accent); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.05em;">
+        → Voir la page exercices
+      </a>
+    </p>
+
+    <div class="status">
+      <span class="dot"></span>
+      Serveur opérationnel
+    </div>
+  </div>
+</body>
+</html>
