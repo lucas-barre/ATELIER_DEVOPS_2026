@@ -30,12 +30,20 @@ jobs:
 
       - name: Print public URL
         run: |
-          URL=$(curl -s http://localhost:4040/api/tunnels \
-                | python3 -c "import sys,json; print(json.load(sys.stdin)['tunnels'][0]['public_url'])")
-          echo "======================================"
-          echo "  URL PUBLIQUE : $URL"
-          echo "  Lien exercices : $URL/exercices/"
-          echo "======================================"
+          for i in {1..15}; do
+            URL=$(curl -s http://localhost:4040/api/tunnels | python3 -c "import sys,json; data=json.load(sys.stdin); print(data['tunnels'][0]['public_url'])" 2>/dev/null)
+            if [ -n "$URL" ]; then
+              echo "======================================"
+              echo "  URL PUBLIQUE : $URL"
+              echo "  Lien exercices : $URL/exercices/"
+              echo "======================================"
+              exit 0
+            fi
+            echo "En attente du tunnel..."
+            sleep 2
+          done
+          echo "Erreur : Impossible de récupérer l'URL publique."
+          exit 1
 
       - name: Keep tunnel open (120s)
         run: sleep 120
