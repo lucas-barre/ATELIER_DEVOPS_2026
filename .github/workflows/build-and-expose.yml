@@ -44,8 +44,6 @@ jobs:
         env:
             NGROK_AUTHTOKEN: ${{ secrets.NGROK_AUTHTOKEN }}
         run: |
-            echo "Vérification du secret : $NGROK_AUTHTOKEN"
-            
             nohup ngrok http 5000 &> /tmp/ngrok.log &
             for i in $(seq 1 10); do
               curl -s http://localhost:4040/api/tunnels | grep -q "public_url" && break
