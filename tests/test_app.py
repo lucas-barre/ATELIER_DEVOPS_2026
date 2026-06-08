@@ -16,4 +16,4 @@ def test_home_route(client):
 def test_exercices_route(client):
     response = client.get('/exercices/')
     assert response.status_code == 200
-    assert b"incroyable" in response.data
+    assert b"inexistant" in response.data
