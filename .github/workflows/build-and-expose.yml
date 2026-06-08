@@ -1,0 +1,53 @@
+name: Build and expose Flask via Ngrok
+
+on: [push]
+
+jobs:
+  expose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t flask-app .
+
+      - name: Run container (detached)
+        run: docker run -d --name flask-app -p 5000:5000 flask-app
+
+      - name: Install Ngrok
+        run: sudo snap install ngrok
+      - name: Start Ngrok tunnel
+        env:
+            NGROK_AUTHTOKEN: ${{ secrets.NGROK_AUTHTOKEN }}
+        run: |
+            nohup ngrok http 5000 &> /tmp/ngrok.log &
+            for i in $(seq 1 10); do
+            curl -s http://localhost:4040/api/tunnels | grep -q "public_url" && break
+            sleep 2
+            done
+
+      - name: Print public URL
+        run: |
+          for i in {1..15}; do
+            URL=$(curl -s http://localhost:4040/api/tunnels | python3 -c "import sys,json; data=json.load(sys.stdin); print(data['tunnels'][0]['public_url'])" 2>/dev/null)
+            if [ -n "$URL" ]; then
+              echo "======================================"
+              echo "  URL PUBLIQUE : $URL"
+              echo "  Lien exercices : $URL/exercices/"
+              echo "======================================"
+              exit 0
+            fi
+            echo "En attente du tunnel..."
+            sleep 2
+          done
+          echo "Erreur : Impossible de récupérer l'URL publique."
+          exit 1
+
+      - name: Keep tunnel open (120s)
+        run: sleep 120
+
+      - name: Stop container
+        if: always()
+        run: docker stop flask-app || true
