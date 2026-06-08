@@ -19,7 +19,7 @@ jobs:
           pip install -r requirements-dev.txt
 
       - name: Linting (Ruff)
-        run: ruff check .
+        run: ruff check . --fix
 
       - name: Run Tests (Pytest)
         run: pytest
