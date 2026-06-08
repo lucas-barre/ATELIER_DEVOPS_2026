@@ -17,10 +17,7 @@ jobs:
         run: docker run -d --name flask-app -p 5000:5000 flask-app
 
       - name: Install Ngrok
-        run: |
-            curl -sSL https://bin.equinox.io/c/bkkhummel/ngrok-stable-linux-amd64.tgz \
-            | tar xz -C /usr/local/bin
-
+        run: sudo snap install ngrok
       - name: Start Ngrok tunnel
         env:
             NGROK_AUTHTOKEN: ${{ secrets.NGROK_AUTHTOKEN }}
