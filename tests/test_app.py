@@ -1,10 +1,9 @@
 import pytest
-from app import app  # Assurez-vous que votre application Flask s'appelle 'app'
+import app
 
 
 @pytest.fixture
 def client():
-    # Configure l'application pour les tests
     app.config['TESTING'] = True
     with app.test_client() as client:
         yield client
