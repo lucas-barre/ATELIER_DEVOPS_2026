@@ -4,3 +4,5 @@ lint.select = ["E", "F", "W"]
 lint.ignore = []
 lint.extend-select = ["I"]
 
+[tool.pytest.ini_options]
+pythonpath = ["."]
